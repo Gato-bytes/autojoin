@@ -1,7 +1,6 @@
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
 from pydantic import BaseModel
-from mangum import Mangum  # Adaptador para serverless
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -12,10 +11,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+current_job = ""
+
 class JobData(BaseModel):
     jobIdMobile: str
-
-current_job = ""
 
 @app.post("/job")
 async def update_job(data: JobData):
@@ -27,5 +26,3 @@ async def update_job(data: JobData):
 @app.get("/job")
 async def get_job():
     return {"jobIdMobile": current_job}
-
-handler = Mangum(app)  # Permite rodar em AWS Lambda / Vercel serverless
