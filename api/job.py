@@ -1,8 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Job API", version="1.0.0")
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -12,25 +12,17 @@ app.add_middleware(
 )
 
 class JobData(BaseModel):
-    money: str
-    name: str
-    players: str
-    scriptJoinPC: str
+    jobIdMobile: str
 
-jobs = []
+current_job = ""
 
 @app.post("/job")
-async def add_job(data: JobData):
-    global jobs
-    jobs.insert(0, {
-        "money": data.money,
-        "name": data.name,
-        "players": data.players,
-        "script": data.scriptJoinPC
-    })
-    jobs = jobs[:150]
-    return {"message": "Job adicionado", "jobs": jobs}
+async def update_job(data: JobData):
+    global current_job
+    current_job = data.jobIdMobile
+    print(f"[UPDATE] jobIdMobile atualizado: {current_job}")
+    return {"message": "JobIdMobile atualizado"}
 
 @app.get("/job")
-async def get_jobs():
-    return {"jobs": jobs}
+async def get_job():
+    return {"jobIdMobile": current_job}
