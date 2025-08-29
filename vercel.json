@@ -1,9 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/job.py", "use": "@vercel/python" }
+    { "src": "api/job.py", "use": "@vercel/python" },
+    { "src": "api/api.py", "use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/job", "dest": "api/job.py" }
+    { "src": "/job", "dest": "api/job.py" },
+    { "src": "/api", "dest": "api/api.py" }
   ]
 }
