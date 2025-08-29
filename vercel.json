@@ -5,7 +5,8 @@
     { "src": "api/job.py", "use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "api/api.py" },
-    { "src": "/job", "dest": "api/job.py" }
+    { "src": "/job", "dest": "api/job.py" },
+    { "src": "/api/addsmthg", "dest": "api/api.py" },
+    { "src": "/api/getthatshit", "dest": "api/api.py" }
   ]
 }
